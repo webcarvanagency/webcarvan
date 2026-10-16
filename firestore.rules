@@ -1,0 +1,50 @@
+rules_version = '2';
+
+// Replace the emails below with the admin emails you put in
+// NEXT_PUBLIC_ADMIN_EMAILS, then publish these rules in
+// Firebase console → Firestore Database → Rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['joker334747@gmail.com'];
+    }
+
+    // Website content: everyone can read, only admins can write
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /services/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /testimonials/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /posts/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Contact form messages: visitors can create, only admins can read
+    match /messages/{docId} {
+      allow create: if request.resource.data.keys().hasOnly(['name', 'email', 'phone', 'service', 'message', 'createdAt', 'read'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() < 120
+        && request.resource.data.email is string
+        && request.resource.data.email.size() < 160
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() < 5000
+        && request.resource.data.read == false;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
