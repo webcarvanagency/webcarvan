@@ -1,4 +1,4 @@
-# Web Caravan
+# Web Caravan agency
 
 SEO-friendly agency website with a full admin panel, built with **Next.js (App Router, JavaScript)**, **Tailwind CSS**, **Firebase** (Firestore + Auth) and **Cloudinary**.
 
