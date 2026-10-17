@@ -3,14 +3,16 @@ import PageHero from "@/components/site/PageHero";
 import ContactForm from "@/components/site/ContactForm";
 import SocialLinks from "@/components/site/SocialLinks";
 import { getServices, getSettings } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 import { whatsappLink } from "@/lib/utils";
 
 export async function generateMetadata() {
-  const { contact } = await getSettings();
+  const { contact, seo } = await getSettings();
   return {
     title: "Contact Us",
     description: contact.text,
     alternates: { canonical: "/contact" },
+    keywords: buildKeywords(seo.keywords, pageKeywords.contact),
   };
 }
 

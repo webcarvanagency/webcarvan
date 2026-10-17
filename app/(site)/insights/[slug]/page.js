@@ -7,6 +7,7 @@ import PostCard from "@/components/site/PostCard";
 import JsonLd from "@/components/site/JsonLd";
 import CtaSection from "@/components/site/CtaSection";
 import { getBySlug, getPosts, getSettings } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 import { formatDate, getSiteUrl } from "@/lib/utils";
 
 export async function generateStaticParams() {
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }) {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
     alternates: { canonical: `/insights/${post.slug}` },
+    keywords: buildKeywords(post.seoKeywords, post.title, pageKeywords.insights),
     openGraph: {
       type: "article",
       title: post.title,

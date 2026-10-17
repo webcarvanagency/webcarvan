@@ -6,8 +6,11 @@ import RichText from "@/components/site/RichText";
 import ButtonLink from "@/components/site/ButtonLink";
 import ServiceCard from "@/components/site/ServiceCard";
 import CtaSection from "@/components/site/CtaSection";
+import JsonLd from "@/components/site/JsonLd";
 import { Icon } from "@/lib/icons";
 import { getBySlug, getServices, getSettings } from "@/lib/data";
+import { getSiteUrl } from "@/lib/utils";
+import { buildKeywords, pageKeywords, serviceKeywords } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -22,6 +25,7 @@ export async function generateMetadata({ params }) {
     title: service.seoTitle || service.title,
     description: service.seoDescription || service.excerpt,
     alternates: { canonical: `/services/${service.slug}` },
+    keywords: buildKeywords(service.seoKeywords, serviceKeywords[service.slug], service.features, service.title, pageKeywords.services),
     openGraph: { title: service.title, description: service.excerpt, images: service.image ? [service.image] : [] },
   };
 }
@@ -32,9 +36,23 @@ export default async function ServicePage({ params }) {
   if (!service) notFound();
 
   const others = services.filter((item) => item.id !== service.id).slice(0, 3);
+  const siteUrl = getSiteUrl(settings);
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: service.title,
+          serviceType: service.title,
+          description: service.excerpt,
+          url: `${siteUrl}/services/${service.slug}`,
+          image: service.image || undefined,
+          areaServed: ["Pakistan", "Worldwide"],
+          provider: { "@type": "Organization", name: settings.general.siteName, url: siteUrl },
+        }}
+      />
       <PageHero
         label="Service"
         title={service.title}

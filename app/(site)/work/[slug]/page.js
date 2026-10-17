@@ -7,6 +7,7 @@ import ButtonLink from "@/components/site/ButtonLink";
 import ProjectCard, { ProjectImage } from "@/components/site/ProjectCard";
 import CtaSection from "@/components/site/CtaSection";
 import { getBySlug, getProjects, getSettings } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }) {
     title: project.seoTitle || project.title,
     description: project.seoDescription || project.excerpt,
     alternates: { canonical: `/work/${project.slug}` },
+    keywords: buildKeywords(project.seoKeywords, project.title, project.category, project.tags, pageKeywords.work),
     openGraph: { title: project.title, description: project.excerpt, images: project.image ? [project.image] : [] },
   };
 }

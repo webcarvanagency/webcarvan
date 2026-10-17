@@ -1,6 +1,7 @@
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import JsonLd from "@/components/site/JsonLd";
+import WhatsAppButton from "@/components/site/WhatsAppButton";
 import { getServices, getSettings } from "@/lib/data";
 import { getSiteUrl } from "@/lib/utils";
 
@@ -36,6 +37,7 @@ export default async function SiteLayout({ children }) {
       <Header general={general} hero={settings.hero} />
       <main id="main">{children}</main>
       <Footer settings={settings} services={services} />
+      <WhatsAppButton contact={contact} />
     </>
   );
 }

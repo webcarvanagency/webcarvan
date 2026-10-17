@@ -2,13 +2,15 @@ import PageHero from "@/components/site/PageHero";
 import ProjectCard from "@/components/site/ProjectCard";
 import CtaSection from "@/components/site/CtaSection";
 import { getProjects, getSettings } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 
 export async function generateMetadata() {
-  const { sections } = await getSettings();
+  const { sections, seo } = await getSettings();
   return {
     title: "Our Work",
     description: sections.projectsText,
     alternates: { canonical: "/work" },
+    keywords: buildKeywords(seo.keywords, pageKeywords.work),
   };
 }
 

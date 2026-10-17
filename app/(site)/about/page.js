@@ -7,13 +7,15 @@ import TestimonialsSection from "@/components/site/TestimonialsSection";
 import CtaSection from "@/components/site/CtaSection";
 import { Icon } from "@/lib/icons";
 import { getSettings, getTestimonials } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 
 export async function generateMetadata() {
-  const { about } = await getSettings();
+  const { about, seo } = await getSettings();
   return {
     title: "About Us",
     description: about.description,
     alternates: { canonical: "/about" },
+    keywords: buildKeywords(seo.keywords, pageKeywords.about),
   };
 }
 

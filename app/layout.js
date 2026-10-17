@@ -1,6 +1,8 @@
 import { Plus_Jakarta_Sans, Caveat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { getSettings } from "@/lib/data";
 import { getSiteUrl } from "@/lib/utils";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", display: "swap" });
@@ -16,7 +18,7 @@ export async function generateMetadata() {
     metadataBase: new URL(siteUrl),
     title: { default: seo.title || general.siteName, template: `%s | ${general.siteName}` },
     description: seo.description,
-    keywords: seo.keywords ? seo.keywords.split(",").map((keyword) => keyword.trim()) : [],
+    keywords: buildKeywords(seo.keywords, pageKeywords.home),
     applicationName: general.siteName,
     alternates: { canonical: "/" },
     icons: general.favicon ? { icon: general.favicon, apple: general.favicon } : undefined,
@@ -46,7 +48,10 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${jakarta.variable} ${caveat.variable}`}>
-      <body className="bg-white font-sans text-slate-600 antialiased">{children}</body>
+      <body className="bg-white font-sans text-slate-600 antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

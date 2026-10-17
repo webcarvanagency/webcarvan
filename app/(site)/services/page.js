@@ -3,13 +3,15 @@ import ServiceCard from "@/components/site/ServiceCard";
 import ProcessSection from "@/components/site/ProcessSection";
 import CtaSection from "@/components/site/CtaSection";
 import { getServices, getSettings } from "@/lib/data";
+import { buildKeywords, pageKeywords } from "@/lib/seo";
 
 export async function generateMetadata() {
-  const { sections } = await getSettings();
+  const { sections, seo } = await getSettings();
   return {
     title: "Services",
     description: sections.servicesText,
     alternates: { canonical: "/services" },
+    keywords: buildKeywords(seo.keywords, pageKeywords.services),
   };
 }
 
