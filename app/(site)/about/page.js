@@ -5,7 +5,7 @@ import StatsBar from "@/components/site/StatsBar";
 import ProcessSection from "@/components/site/ProcessSection";
 import TestimonialsSection from "@/components/site/TestimonialsSection";
 import CtaSection from "@/components/site/CtaSection";
-import { Icon } from "@/lib/icons";
+import WhyChooseSection from "@/components/site/WhyChooseSection";
 import { getSettings, getTestimonials } from "@/lib/data";
 import { buildKeywords, pageKeywords } from "@/lib/seo";
 
@@ -41,24 +41,7 @@ export default async function AboutPage() {
         <StatsBar stats={settings.stats} />
       </div>
 
-      {about.values?.length > 0 && (
-        <section className="pb-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-extrabold tracking-tight text-navy-900">What We Believe In</h2>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {about.values.map((value) => (
-                <div key={value.title} className="rounded-2xl border border-slate-200 p-7">
-                  <span className="flex size-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                    <Icon name={value.icon} className="size-6" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-5 font-bold text-navy-900">{value.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <WhyChooseSection sections={sections} items={about.values} />
 
       <ProcessSection sections={sections} steps={settings.process} />
       <TestimonialsSection sections={sections} testimonials={testimonials} />

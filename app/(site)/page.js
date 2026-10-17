@@ -5,6 +5,9 @@ import ServiceCard from "@/components/site/ServiceCard";
 import ProjectCard from "@/components/site/ProjectCard";
 import AboutSection from "@/components/site/AboutSection";
 import ProcessSection from "@/components/site/ProcessSection";
+import WhyChooseSection from "@/components/site/WhyChooseSection";
+import ButtonLink from "@/components/site/ButtonLink";
+import { ArrowRight } from "lucide-react";
 import TestimonialsSection from "@/components/site/TestimonialsSection";
 import PostCard from "@/components/site/PostCard";
 import CtaSection from "@/components/site/CtaSection";
@@ -35,9 +38,15 @@ export default async function HomePage() {
               align="center"
             />
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {services.slice(0, 3).map((service) => (
+              {services.slice(0, 6).map((service) => (
                 <ServiceCard key={service.id} service={service} />
               ))}
+            </div>
+            <div className="mt-12 flex justify-center">
+              <ButtonLink href="/services">
+                Explore All Services
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </ButtonLink>
             </div>
           </div>
         </section>
@@ -50,7 +59,7 @@ export default async function HomePage() {
               label={sections.projectsLabel}
               title={sections.projectsTitle}
               text={sections.projectsText}
-              action={{ href: "/work", label: "View All Projects" }}
+              action={{ href: "/work", label: "View Our Portfolio" }}
             />
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {projects.map((project) => (
@@ -62,6 +71,7 @@ export default async function HomePage() {
       )}
 
       <AboutSection about={settings.about} />
+      <WhyChooseSection sections={sections} items={settings.about.values} />
       <ProcessSection sections={sections} steps={settings.process} />
       <TestimonialsSection sections={sections} testimonials={testimonials.slice(0, 3)} />
 

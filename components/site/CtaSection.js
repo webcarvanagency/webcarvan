@@ -26,11 +26,18 @@ export default function CtaSection({ cta, contact }) {
                 {cta.buttonLabel}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </ButtonLink>
-              {whatsapp && (
-                <ButtonLink href={whatsapp} variant="ghost">
-                  <MessageCircle className="size-4" aria-hidden="true" />
-                  Chat on WhatsApp
+              {cta.secondaryLabel ? (
+                <ButtonLink href={cta.secondaryLink || "/contact"} variant="ghost">
+                  {cta.secondaryLabel}
+                  <ArrowRight className="size-4" aria-hidden="true" />
                 </ButtonLink>
+              ) : (
+                whatsapp && (
+                  <ButtonLink href={whatsapp} variant="ghost">
+                    <MessageCircle className="size-4" aria-hidden="true" />
+                    Chat on WhatsApp
+                  </ButtonLink>
+                )
               )}
             </div>
             {cta.note && <p className="font-script text-2xl text-brand-200">{cta.note}</p>}

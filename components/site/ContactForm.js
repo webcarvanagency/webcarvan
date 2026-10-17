@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
 import { CircleCheck, LoaderCircle, Send } from "lucide-react";
-import { db } from "@/lib/firebase";
 
 const emptyForm = { name: "", email: "", phone: "", service: "", message: "" };
 
 const inputClass =
-  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-navy-900 placeholder:text-slate-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 focus:outline-none";
+  "w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-navy-900 placeholder:text-slate-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 focus:outline-none";
 
 export default function ContactForm({ services = [] }) {
   const [form, setForm] = useState(emptyForm);
@@ -18,12 +16,11 @@ export default function ContactForm({ services = [] }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (!db) {
-      setStatus("error");
-      return;
-    }
     setStatus("sending");
     try {
+      // Firebase is loaded only when the form is sent, keeping it out of the page bundle.
+      const [{ addDoc, collection }, { db }] = await Promise.all([import("firebase/firestore"), import("@/lib/firebase")]);
+      if (!db) throw new Error("Firebase is not configured");
       await addDoc(collection(db, "messages"), { ...form, createdAt: Date.now(), read: false });
       setForm(emptyForm);
       setStatus("sent");
@@ -47,7 +44,7 @@ export default function ContactForm({ services = [] }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
       <div>
         <label htmlFor="name" className="mb-2 block text-sm font-medium text-navy-900">
           Full Name

@@ -34,7 +34,7 @@ export default async function ContactPage() {
       <PageHero label="Contact" title={contact.title} text={contact.text} breadcrumbs={[{ label: "Contact" }]} />
       <section className="py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
-          <div className="rounded-3xl bg-navy-900 p-8 text-slate-300 sm:p-10 lg:col-span-2">
+          <div className="min-w-0 rounded-3xl bg-navy-900 p-6 text-slate-300 sm:p-10 lg:col-span-2">
             <h2 className="text-2xl font-bold text-white">Contact Information</h2>
             <p className="mt-3 text-sm leading-relaxed">Reach out through any channel below. We are happy to help.</p>
             <ul className="mt-10 space-y-7">
@@ -43,18 +43,18 @@ export default async function ContactPage() {
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-brand-300">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">{label}</p>
                     {href ? (
                       <a
                         href={href}
-                        className="mt-1 block font-medium text-white hover:text-brand-300"
+                        className="mt-1 block font-medium break-words text-white hover:text-brand-300"
                         {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       >
                         {value}
                       </a>
                     ) : (
-                      <p className="mt-1 font-medium text-white">{value}</p>
+                      <p className="mt-1 font-medium break-words text-white">{value}</p>
                     )}
                   </div>
                 </li>
@@ -63,7 +63,7 @@ export default async function ContactPage() {
             <SocialLinks social={social} className="mt-10" />
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 lg:col-span-3">
+          <div className="min-w-0 rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 lg:col-span-3">
             <h2 className="text-2xl font-bold text-navy-900">Send Us a Message</h2>
             <p className="mt-2 mb-8 text-sm text-slate-600">Fill in the form and our team will get back to you shortly.</p>
             <ContactForm services={services} />

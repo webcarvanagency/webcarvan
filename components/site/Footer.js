@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Heart, Mail, MapPin, Phone } from "lucide-react";
 import Logo from "./Logo";
 import SocialLinks from "./SocialLinks";
-import { navLinks } from "./navigation";
+import { footerLinks } from "./navigation";
 
 export default function Footer({ settings, services = [] }) {
   const { general, contact, social } = settings;
@@ -20,7 +20,7 @@ export default function Footer({ settings, services = [] }) {
         <div>
           <h2 className="text-sm font-semibold text-white">Company</h2>
           <ul className="mt-5 space-y-3 text-sm">
-            {navLinks.map((link) => (
+            {footerLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="transition-colors hover:text-white">
                   {link.label}
@@ -36,7 +36,7 @@ export default function Footer({ settings, services = [] }) {
             {services.map((service) => (
               <li key={service.id}>
                 <Link href={`/services/${service.slug}`} className="transition-colors hover:text-white">
-                  {service.title}
+                  {service.shortTitle || service.title}
                 </Link>
               </li>
             ))}

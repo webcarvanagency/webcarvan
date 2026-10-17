@@ -21,7 +21,7 @@ export default function HeroMockup({ siteName }) {
               </p>
               <span className="block h-1.5 w-4/5 rounded-full bg-white/25" />
               <span className="block h-1.5 w-3/5 rounded-full bg-white/15" />
-              <span className="mt-4 inline-block rounded-full bg-brand-500 px-3 py-1 text-[0.6rem] font-semibold text-white">
+              <span className="mt-4 inline-block rounded-full bg-brand-600 px-3 py-1 text-[0.6rem] font-semibold text-white">
                 {siteName}
               </span>
             </div>

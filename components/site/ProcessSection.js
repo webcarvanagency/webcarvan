@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
+const columns = { 3: "lg:grid-cols-3", 4: "lg:grid-cols-4", 5: "lg:grid-cols-5" };
+
 export default function ProcessSection({ sections, steps = [] }) {
   if (!steps.length) return null;
 
@@ -8,7 +10,7 @@ export default function ProcessSection({ sections, steps = [] }) {
     <section className="bg-slate-50 py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading label={sections.processLabel} title={sections.processTitle} text={sections.processText} />
-        <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className={`mt-14 grid gap-10 sm:grid-cols-2 ${columns[steps.length] || "lg:grid-cols-4"}`}>
           {steps.map((step, index) => (
             <li key={step.title} className="relative">
               <div className="flex items-center gap-4">

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, CirclePlay, CornerRightUp } from "lucide-react";
+import { ArrowRight, CornerRightUp } from "lucide-react";
 import ButtonLink from "./ButtonLink";
 import HeroMockup from "./HeroMockup";
 
@@ -20,7 +20,14 @@ export default function HeroSection({ hero, siteName }) {
             {hero.title}{" "}
             <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">{hero.highlight}</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">{hero.description}</p>
+          <div className="mt-6 max-w-xl space-y-4 text-lg leading-relaxed text-slate-600">
+            {(hero.description || "")
+              .split(/\n\s*\n/)
+              .filter(Boolean)
+              .map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+          </div>
 
           <div className="mt-9 flex flex-wrap gap-4">
             {hero.primaryLabel && (
@@ -32,7 +39,7 @@ export default function HeroSection({ hero, siteName }) {
             {hero.secondaryLabel && (
               <ButtonLink href={hero.secondaryLink} variant="outline">
                 {hero.secondaryLabel}
-                <CirclePlay className="size-4" aria-hidden="true" />
+                <ArrowRight className="size-4" aria-hidden="true" />
               </ButtonLink>
             )}
           </div>

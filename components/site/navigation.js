@@ -6,3 +6,11 @@ export const navLinks = [
   { href: "/insights", label: "Insights" },
   { href: "/contact", label: "Contact" },
 ];
+
+export const footerLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/services", label: "Services" },
+  { href: "/work", label: "Portfolio" },
+  { href: "/contact", label: "Contact" },
+];

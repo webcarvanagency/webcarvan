@@ -36,19 +36,19 @@ export default function AboutSection({ about, showButton = true, headingLevel = 
           <p className="mt-5 text-base leading-relaxed text-slate-600">{about.description}</p>
 
           {about.highlights?.length > 0 && (
-            <dl className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
               {about.highlights.map((item) => (
-                <div key={item.label} className="flex items-center gap-3">
+                <li key={item.label} className="flex items-center gap-3">
                   <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-brand-100 bg-brand-50 text-brand-600">
                     <Icon name={item.icon} className="size-5" aria-hidden="true" />
                   </span>
-                  <div className="flex flex-col">
-                    <dt className="text-xs text-slate-500">{item.label}</dt>
-                    <dd className="order-first font-bold text-navy-900">{item.value}</dd>
-                  </div>
-                </div>
+                  <p className="flex flex-col">
+                    <span className="text-xs text-slate-500">{item.label}</span>
+                    <span className="order-first font-bold text-navy-900">{item.value}</span>
+                  </p>
+                </li>
               ))}
-            </dl>
+            </ul>
           )}
 
           {about.skills?.length > 0 && (
@@ -63,7 +63,7 @@ export default function AboutSection({ about, showButton = true, headingLevel = 
 
           {showButton && (
             <ButtonLink href="/about" className="mt-10">
-              Our Story
+              {about.buttonLabel || "Our Story"}
               <ArrowRight className="size-4" aria-hidden="true" />
             </ButtonLink>
           )}
