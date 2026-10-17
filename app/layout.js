@@ -1,5 +1,6 @@
 import { Plus_Jakarta_Sans, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getSettings } from "@/lib/data";
 import { getSiteUrl } from "@/lib/utils";
 import { buildKeywords, pageKeywords } from "@/lib/seo";
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
       <body className="bg-white font-sans text-slate-600 antialiased">
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
