@@ -49,6 +49,21 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${jakarta.variable} ${caveat.variable}`}>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4RMRY0QZVF" />
+        <script
+          id="google-tag"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-4RMRY0QZVF');
+            `,
+          }}
+        />
+      </head>
       <body className="bg-white font-sans text-slate-600 antialiased">
         {children}
         <Analytics />
