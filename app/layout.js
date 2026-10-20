@@ -13,27 +13,29 @@ export async function generateMetadata() {
   const settings = await getSettings();
   const { general, seo } = settings;
   const siteUrl = getSiteUrl(settings);
-  const images = seo.ogImage ? [{ url: seo.ogImage, width: 1200, height: 630, alt: general.siteName }] : [];
+  const title = seo.title || general.siteName;
+  const socialImage = seo.ogImage || "/brand/webcarvan-og.webp";
+  const images = [{ url: socialImage, width: 1200, height: 630, alt: `${general.siteName} — digital solutions` }];
 
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: seo.title || general.siteName, template: `%s | ${general.siteName}` },
+    title: { default: title, template: `%s | ${general.siteName}` },
     description: seo.description,
     keywords: buildKeywords(seo.keywords, pageKeywords.home),
     applicationName: general.siteName,
     alternates: { canonical: "/" },
-    icons: general.favicon ? { icon: general.favicon, apple: general.favicon } : undefined,
+    icons: { icon: "/icon.png", apple: "/apple-icon.png" },
     openGraph: {
       type: "website",
       siteName: general.siteName,
-      title: seo.title,
+      title,
       description: seo.description,
       url: siteUrl,
       images,
     },
     twitter: {
       card: "summary_large_image",
-      title: seo.title,
+      title,
       description: seo.description,
       site: seo.twitterHandle || undefined,
       images: images.map((image) => image.url),

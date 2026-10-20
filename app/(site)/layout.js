@@ -11,6 +11,7 @@ export default async function SiteLayout({ children }) {
   const [settings, services] = await Promise.all([getSettings(), getServices()]);
   const { general, contact, social, seo } = settings;
   const siteUrl = getSiteUrl(settings);
+  const logoUrl = new URL("/icon.png", siteUrl).toString();
 
   const organization = {
     "@context": "https://schema.org",
@@ -18,7 +19,7 @@ export default async function SiteLayout({ children }) {
     name: general.siteName,
     url: siteUrl,
     description: seo.description,
-    logo: general.logo || undefined,
+    logo: logoUrl,
     email: contact.email || undefined,
     telephone: contact.phone || undefined,
     address: contact.address ? { "@type": "PostalAddress", streetAddress: contact.address } : undefined,
