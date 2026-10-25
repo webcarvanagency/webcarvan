@@ -24,7 +24,13 @@ export async function generateMetadata() {
     keywords: buildKeywords(seo.keywords, pageKeywords.home),
     applicationName: general.siteName,
     alternates: { canonical: "/" },
-    icons: { icon: "/icon.png", apple: "/apple-icon.png" },
+    icons: {
+      icon: [
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+        { url: "/favicon.ico", sizes: "any" },
+      ],
+      apple: "/apple-icon.png",
+    },
     openGraph: {
       type: "website",
       siteName: general.siteName,

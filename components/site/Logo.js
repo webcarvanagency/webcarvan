@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function Logo({ general, dark = false }) {
   const siteName = general.siteName || "Web Caravan";
-  const brandName = siteName.replace(/\s+/g, "");
-  const mark = dark
-    ? general.logoDark || general.logo || "/brand/webcarvan-mark.webp"
-    : general.logo || "/brand/webcarvan-mark.webp";
+  const brandName = siteName.toLowerCase() === "web caravan" ? "Webcarvan" : siteName.replace(/\s+/g, "");
+  const configuredMark = dark ? general.logoDark || general.logo : general.logo;
+  const defaultMark = dark ? "/brand/footer.webp" : "/brand/header.webp";
+  const mark = configuredMark && configuredMark !== "/brand/webcarvan-mark.webp" ? configuredMark : defaultMark;
 
   return (
     <Link href="/" className="flex min-w-0 items-center gap-2.5" aria-label={`${siteName} home`}>
