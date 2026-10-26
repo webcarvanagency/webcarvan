@@ -94,3 +94,4 @@ signed in, run `firebase deploy --only firestore:rules --project YOUR_PROJECT_ID
 `firebase.json` points the CLI to this rules file. Local file edits alone do not
 update deployed Firebase rules. The admin allowlist in this file must match
 `NEXT_PUBLIC_ADMIN_EMAILS`; that environment variable does not configure rules.
+
