@@ -40,7 +40,7 @@ firestore.rules    database security rules
 3. **Firebase**
    - Create a project at https://console.firebase.google.com and add a **Web app** - copy its config into the env file.
    - **Build → Firestore Database**: create a database (production mode).
-   - **Firestore → Rules**: paste `firestore.rules`, replace `admin@example.com` with your admin email(s), publish.
+   - **Firestore → Rules**: paste `firestore.rules`, check the email allowlist in `isAdmin()` matches your admin email(s), then publish.
    - **Build → Authentication**: enable **Email/Password**, then add your admin user under **Users**.
    - Put the same email(s) in `NEXT_PUBLIC_ADMIN_EMAILS` (comma separated).
 
@@ -66,3 +66,31 @@ firestore.rules    database security rules
 - Slugs are generated from the title automatically when left empty.
 - Unpublished items are saved as drafts and hidden from the website.
 # webcarvan
+
+## Firestore access rules
+
+`firestore.rules` matches the existing website and admin panel:
+
+| Data | Visitors and other signed-in users | Allowlisted admin |
+| --- | --- | --- |
+| `settings/site` | Read | Read and write |
+| `services`, `projects`, `testimonials`, `posts` | Read | Read and write |
+| `messages` | Create a valid enquiry only | Read, delete, and toggle `read` |
+| All other paths | Denied | Denied |
+
+Enquiries must contain exactly the seven fields sent by the contact form. Types,
+lengths, email format, a positive integer millisecond `createdAt`, and initial
+`read: false` are checked. Phone and service may be empty strings. These rules do
+not provide spam rate limiting or prove that the supplied timestamp is accurate.
+
+Content collections remain publicly readable because `lib/data.js` lists them
+without authentication and filters drafts afterward. Drafts are hidden from the
+rendered website, but are **not private in Firestore**. Do not store confidential
+content in these collections. Image uploads use Cloudinary, not Firebase Storage.
+
+Publish by pasting the file into the Firebase console for the same project as
+`NEXT_PUBLIC_FIREBASE_PROJECT_ID`. Alternatively, with Firebase CLI installed and
+signed in, run `firebase deploy --only firestore:rules --project YOUR_PROJECT_ID`.
+`firebase.json` points the CLI to this rules file. Local file edits alone do not
+update deployed Firebase rules. The admin allowlist in this file must match
+`NEXT_PUBLIC_ADMIN_EMAILS`; that environment variable does not configure rules.
