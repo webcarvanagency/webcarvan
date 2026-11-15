@@ -77,6 +77,10 @@ export default function Footer({ settings, services = [] }) {
           <p>
             &copy; {year} {general.copyright}
           </p>
+          <nav aria-label="Website policies" className="flex flex-wrap justify-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+            <Link href="/editorial-policy" className="hover:text-white">Editorial Policy</Link>
+          </nav>
           {general.madeIn && (
             <p className="flex items-center gap-1.5">
               Designed with <Heart className="size-3.5 fill-red-500 text-red-500" aria-label="love" /> in {general.madeIn}

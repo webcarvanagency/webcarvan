@@ -32,7 +32,9 @@ const nextConfig = {
   allowedDevOrigins: ["192.168.*.*", "10.*.*.*"],
   async headers() {
     return [
-      { source: "/:path*", headers: securityHeaders },
+      { source: "/:path*", headers: securityHeaders.filter((header) => header.key !== "Content-Security-Policy") },
+      // Insights receives a fresh nonce policy from proxy.js instead.
+      { source: "/((?!insights(?:/|$)).*)", headers: [{ key: "Content-Security-Policy", value: contentSecurityPolicy }] },
       {
         source: "/",
         headers: [

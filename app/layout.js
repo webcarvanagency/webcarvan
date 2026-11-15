@@ -1,4 +1,6 @@
 import { Plus_Jakarta_Sans, Caveat } from "next/font/google";
+import Script from "next/script";
+import BlogNavigationBoundary from "@/components/site/BlogNavigationBoundary";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getSettings } from "@/lib/data";
@@ -59,8 +61,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${jakarta.variable} ${caveat.variable}`}>
       <head>
         {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4RMRY0QZVF" />
-        <script
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-4RMRY0QZVF" strategy="afterInteractive" />
+        <Script
           id="google-tag"
           dangerouslySetInnerHTML={{
             __html: `
@@ -73,6 +75,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="bg-white font-sans text-slate-600 antialiased">
+        <BlogNavigationBoundary />
         {children}
         <Analytics />
         <SpeedInsights />

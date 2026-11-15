@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, onSnapshot, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { ArrowLeft, ExternalLink, ImageOff, LoaderCircle, Pencil, Plus, Save, Trash2 } from "lucide-react";
 import { db } from "@/lib/firebase";
 import { collections } from "@/lib/admin-config";
 import { publishChanges } from "@/lib/admin-api";
 import { slugify } from "@/lib/utils";
+import { isBundledPost, mergePosts } from "@/lib/posts";
 import { useAdmin } from "./AdminShell";
 import PageHeader from "./PageHeader";
 import FormField from "./fields/FormField";
@@ -35,7 +36,8 @@ export default function CollectionManager({ name }) {
     return onSnapshot(
       collection(db, name),
       (snapshot) => {
-        const list = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const documents = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const list = name === "posts" ? mergePosts(documents) : documents;
         list.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0) || String(b.date || "").localeCompare(String(a.date || "")));
         setItems(list);
       },
@@ -69,11 +71,21 @@ export default function CollectionManager({ name }) {
   }
 
   async function handleDelete(item) {
-    if (!window.confirm(`Delete "${item[config.titleField]}"? This cannot be undone.`)) return;
+    const bundled = name === "posts" && isBundledPost(item.id);
+    if (!window.confirm(bundled
+      ? `Unpublish "${item[config.titleField]}"? You can publish this guide again from its editor.`
+      : `Delete "${item[config.titleField]}"? This cannot be undone.`)) return;
     try {
-      await deleteDoc(doc(db, name, item.id));
+      if (bundled) {
+        const { id, ...data } = item;
+        data.published = false;
+        data.updatedAt = serverTimestamp();
+        await setDoc(doc(db, name, id), data);
+      } else {
+        await deleteDoc(doc(db, name, item.id));
+      }
       await publishChanges();
-      notify(`${config.singular} deleted`);
+      notify(`${config.singular} ${bundled ? "unpublished" : "deleted"}`);
       setEditing(null);
     } catch (error) {
       notify(error.message, "error");
