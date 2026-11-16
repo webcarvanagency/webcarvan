@@ -44,7 +44,7 @@ service cloud.firestore {
         && data.email.size() > 0 && data.email.size() <= 150
         && data.email.matches('[^\\s@]+@[^\\s@]+\\.[^\\s@]+')
         && data.phone is string && data.phone.size() <= 30
-        && data.service is string && data.service.size() <= 200
+        && data.get('service', '') is string && data.get('service', '').size() <= 200
         && data.message is string
         && data.message.size() > 0 && data.message.size() <= 4000
         && data.message.matches('[\\s\\S]*[^\\s][\\s\\S]*')

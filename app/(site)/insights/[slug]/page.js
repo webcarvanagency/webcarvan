@@ -9,6 +9,7 @@ import CtaSection from "@/components/site/CtaSection";
 import { getBySlug, getPosts, getSettings } from "@/lib/data";
 import { buildKeywords, pageKeywords } from "@/lib/seo";
 import { formatDate, getSiteUrl } from "@/lib/utils";
+import { getPostImage } from "@/lib/content-images";
 
 export async function generateStaticParams() {
   const posts = await getPosts();
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getBySlug("posts", slug);
   if (!post) return {};
+  const image = getPostImage(post);
   return {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }) {
       description: post.excerpt,
       publishedTime: post.date,
       authors: post.author ? [post.author] : [],
-      images: post.image ? [post.image] : [],
+      images: image ? [image] : [],
     },
   };
 }
@@ -40,6 +42,7 @@ export default async function PostPage({ params }) {
   const [post, posts, settings] = await Promise.all([getBySlug("posts", slug), getPosts(), getSettings()]);
   if (!post) notFound();
 
+  const postImage = getPostImage(post);
   const more = posts.filter((item) => item.id !== post.id).slice(0, 3);
   const siteUrl = getSiteUrl(settings);
 
@@ -51,7 +54,7 @@ export default async function PostPage({ params }) {
           "@type": "BlogPosting",
           headline: post.title,
           description: post.excerpt,
-          image: post.image || undefined,
+          image: postImage || undefined,
           datePublished: post.date,
           author: { "@type": "Organization", name: post.author || settings.general.siteName },
           publisher: { "@type": "Organization", name: settings.general.siteName },
@@ -83,9 +86,9 @@ export default async function PostPage({ params }) {
           </div>
         </header>
         <div className="mx-auto max-w-3xl px-4 pb-24 sm:px-6 lg:px-8">
-          {post.image && (
+          {postImage && (
             <div className="relative mb-12 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100">
-              <Image src={post.image} alt={post.title} fill priority sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+              <Image src={postImage} alt={post.title} fill priority sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
             </div>
           )}
           <p className="mb-8 text-lg leading-relaxed font-medium text-navy-900">{post.excerpt}</p>

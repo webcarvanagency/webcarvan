@@ -1,6 +1,7 @@
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import PageHero from "@/components/site/PageHero";
 import ContactForm from "@/components/site/ContactForm";
+import TrackedContactLink from "@/components/site/TrackedContactLink";
 import SocialLinks from "@/components/site/SocialLinks";
 import { getServices, getSettings } from "@/lib/data";
 import { buildKeywords, pageKeywords } from "@/lib/seo";
@@ -46,13 +47,7 @@ export default async function ContactPage() {
                   <div className="min-w-0">
                     <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">{label}</p>
                     {href ? (
-                      <a
-                        href={href}
-                        className="mt-1 block font-medium break-words text-white hover:text-brand-300"
-                        {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      >
-                        {value}
-                      </a>
+                      <TrackedContactLink href={href} label={label} value={value} />
                     ) : (
                       <p className="mt-1 font-medium break-words text-white">{value}</p>
                     )}

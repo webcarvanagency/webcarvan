@@ -1,4 +1,5 @@
 import { getPosts, getProjects, getServices, getSettings } from "@/lib/data";
+import { getPostImage, getServiceImage } from "@/lib/content-images";
 import { getSiteUrl } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -53,7 +54,7 @@ export default async function sitemap() {
     entry("/contact", { lastModified: settingsDate, changeFrequency: "yearly", priority: 0.8 }),
 
     ...services.map((item) =>
-      entry(`/services/${item.slug}`, { lastModified: toDate(item.updatedAt), priority: 0.9, pictures: images(item.image) })
+      entry(`/services/${item.slug}`, { lastModified: toDate(item.updatedAt), priority: 0.9, pictures: images(getServiceImage(item)) })
     ),
     ...projects.map((item) =>
       entry(`/work/${item.slug}`, { lastModified: toDate(item.updatedAt), priority: 0.6, pictures: images(item.image, item.gallery || []) })
@@ -63,7 +64,7 @@ export default async function sitemap() {
         lastModified: toDate(item.updatedAt) || toDate(item.date),
         changeFrequency: "yearly",
         priority: 0.6,
-        pictures: images(item.image),
+        pictures: images(getPostImage(item)),
       })
     ),
   ];

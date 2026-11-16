@@ -11,6 +11,7 @@ import { Icon } from "@/lib/icons";
 import { getBySlug, getServices, getSettings } from "@/lib/data";
 import { getSiteUrl } from "@/lib/utils";
 import { buildKeywords, pageKeywords, serviceKeywords } from "@/lib/seo";
+import { getServiceImage } from "@/lib/content-images";
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -21,12 +22,13 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const service = await getBySlug("services", slug);
   if (!service) return {};
+  const image = getServiceImage(service);
   return {
     title: service.seoTitle || service.title,
     description: service.seoDescription || service.excerpt,
     alternates: { canonical: `/services/${service.slug}` },
     keywords: buildKeywords(service.seoKeywords, serviceKeywords[service.slug], service.features, service.title, pageKeywords.services),
-    openGraph: { title: service.title, description: service.excerpt, images: service.image ? [service.image] : [] },
+    openGraph: { title: service.title, description: service.excerpt, images: image ? [image] : [] },
   };
 }
 
@@ -35,6 +37,7 @@ export default async function ServicePage({ params }) {
   const [service, services, settings] = await Promise.all([getBySlug("services", slug), getServices(), getSettings()]);
   if (!service) notFound();
 
+  const serviceImage = getServiceImage(service);
   const others = services.filter((item) => item.id !== service.id).slice(0, 3);
   const siteUrl = getSiteUrl(settings);
 
@@ -48,7 +51,7 @@ export default async function ServicePage({ params }) {
           serviceType: service.title,
           description: service.excerpt,
           url: `${siteUrl}/services/${service.slug}`,
-          image: service.image || undefined,
+          image: serviceImage || undefined,
           areaServed: ["Pakistan", "Worldwide"],
           provider: { "@type": "Organization", name: settings.general.siteName, url: siteUrl },
         }}
@@ -62,9 +65,9 @@ export default async function ServicePage({ params }) {
       <section className="py-20">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
           <div className="lg:col-span-2">
-            {service.image && (
+            {serviceImage && (
               <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100">
-                <Image src={service.image} alt={service.title} fill priority sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" />
+                <Image src={serviceImage} alt={service.title} fill priority sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover" />
               </div>
             )}
             <RichText text={service.description} />
@@ -83,7 +86,7 @@ export default async function ServicePage({ params }) {
               ))}
             </ul>
             <ButtonLink href="/contact" className="mt-8 w-full">
-              Get a Free Quote
+              Lets discuss your project
               <ArrowRight className="size-4" aria-hidden="true" />
             </ButtonLink>
           </aside>

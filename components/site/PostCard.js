@@ -2,13 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Newspaper } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { getPostImage } from "@/lib/content-images";
 
 export default function PostCard({ post }) {
+  const image = getPostImage(post);
+
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-100/60">
       <div className="relative aspect-[16/9] overflow-hidden bg-brand-50">
-        {post.image ? (
-          <Image src={post.image} alt={post.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
+        {image ? (
+          <Image src={image} alt={post.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="flex size-full items-center justify-center bg-linear-to-br from-brand-50 to-brand-100" aria-hidden="true">
             <Newspaper className="size-10 text-brand-300" />

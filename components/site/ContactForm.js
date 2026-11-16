@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CircleCheck, LoaderCircle, Send } from "lucide-react";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const emptyForm = { name: "", email: "", phone: "", service: "", message: "" };
 
@@ -22,6 +23,10 @@ export default function ContactForm({ services = [] }) {
       const [{ addDoc, collection }, { db }] = await Promise.all([import("firebase/firestore"), import("@/lib/firebase")]);
       if (!db) throw new Error("Firebase is not configured");
       await addDoc(collection(db, "messages"), { ...form, createdAt: Date.now(), read: false });
+      trackAnalyticsEvent("generate_lead", {
+        method: "contact_form",
+        service: form.service || "unspecified",
+      });
       setForm(emptyForm);
       setStatus("sent");
     } catch (error) {

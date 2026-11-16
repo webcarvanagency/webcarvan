@@ -1,4 +1,7 @@
+"use client";
+
 import { whatsappLink } from "@/lib/utils";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export default function WhatsAppButton({ contact }) {
   const href = whatsappLink(contact.whatsapp, contact.whatsappMessage);
@@ -7,6 +10,7 @@ export default function WhatsAppButton({ contact }) {
   return (
     <a
       href={href}
+      onClick={() => trackAnalyticsEvent("whatsapp_click", { link_location: "floating_button" })}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

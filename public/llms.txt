@@ -1,0 +1,25 @@
+# Web Caravan
+
+> Web Caravan is a digital agency based in Islamabad, Pakistan. It provides website development, e-commerce, mobile application, custom software, branding, and digital marketing services.
+
+## Primary pages
+
+- [Home](https://webcarvan.com/): Agency overview and contact paths.
+- [Services](https://webcarvan.com/services): Service overview and links to individual service pages.
+- [Our Work](https://webcarvan.com/work): Selected projects and case studies.
+- [About Us](https://webcarvan.com/about): Company background and approach.
+- [Contact](https://webcarvan.com/contact): Project enquiry form and contact information.
+
+## Insights
+
+- [Insights](https://webcarvan.com/insights): Source-backed guides about websites, e-commerce, analytics, and digital marketing.
+- [Editorial Policy](https://webcarvan.com/editorial-policy): How Web Caravan prepares, sources, and corrects editorial content.
+
+## Policies
+
+- [Privacy Policy](https://webcarvan.com/privacy-policy): Information about data handling, analytics, cookies, and advertising.
+
+## Crawling notes
+
+- Prefer the canonical HTTPS URLs on `webcarvan.com`.
+- Published pages are available to crawl. Administrative and API routes are not public content.
