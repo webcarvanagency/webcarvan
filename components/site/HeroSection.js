@@ -2,7 +2,8 @@ import Image from "next/image";
 import { ArrowRight, CornerRightUp } from "lucide-react";
 import ButtonLink from "./ButtonLink";
 import HeroMockup from "./HeroMockup";
-
+import Heroheading from "./Heroheading"
+import "./herosection.css"
 export default function HeroSection({ hero, siteName }) {
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-brand-50/70 via-white to-white">
@@ -16,10 +17,14 @@ export default function HeroSection({ hero, siteName }) {
               {hero.badge}
             </p>
           )}
-          <h1 className="mt-6 text-4xl leading-[1.1] font-extrabold tracking-tight text-navy-900 sm:text-5xl lg:text-[3.5rem]">
+          {/* <h1 className="mt-6 text-4xl leading-[1.1] font-extrabold tracking-tight text-navy-900 sm:text-5xl lg:text-[3.5rem]">
             {hero.title}{" "}
             <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">{hero.highlight}</span>
-          </h1>
+          </h1> */}
+           <Heroheading hero={hero} />
+          
+
+
           <div className="mt-6 max-w-xl space-y-4 text-lg leading-relaxed text-slate-600">
             {(hero.description || "")
               .split(/\n\s*\n/)

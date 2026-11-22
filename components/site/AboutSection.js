@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight, CornerLeftDown, Users } from "lucide-react";
 import { Icon } from "@/lib/icons";
 import ButtonLink from "./ButtonLink";
+import SmokeHeading from "./SmokeHeading";
 
 export default function AboutSection({ about, showButton = true, headingLevel = "h2" }) {
   const Heading = headingLevel;
@@ -32,7 +33,8 @@ export default function AboutSection({ about, showButton = true, headingLevel = 
 
         <div>
           {about.label && <p className="text-xs font-bold tracking-[0.16em] text-brand-600 uppercase">{about.label}</p>}
-          <Heading className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{about.title}</Heading>
+          {/* <Heading className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{about.title}</Heading> */}
+          <SmokeHeading title={about.title} />
           <p className="mt-5 text-base leading-relaxed text-slate-600">{about.description}</p>
 
           {about.highlights?.length > 0 && (

@@ -1,0 +1,33 @@
+.reveal-mask {
+  display: block;
+  opacity: 0;
+  clip-path: inset(-0.2em 100% -0.2em 0);
+  transition:
+    clip-path 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1s ease;
+}
+
+.reveal-text {
+  display: block;
+  transform: translateX(-40px);
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-mask[data-visible="true"] {
+  opacity: 1;
+  clip-path: inset(-0.2em -0.2em -0.2em 0);
+}
+
+.reveal-mask[data-visible="true"] .reveal-text {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-mask,
+  .reveal-text {
+    transition: none;
+    transform: none;
+    opacity: 1;
+    clip-path: none;
+  }
+}

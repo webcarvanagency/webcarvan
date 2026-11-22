@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-
+// import SmokeHeading from "./SmokeHeading";
+import AnimatedHeading from "./AnimatedHeading";
 export default function PageHero({ label, title, text, breadcrumbs = [] }) {
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-brand-50 to-white">
@@ -30,7 +31,8 @@ export default function PageHero({ label, title, text, breadcrumbs = [] }) {
           </ol>
         </nav>
         {label && <p className="mt-8 text-xs font-bold tracking-[0.16em] text-brand-600 uppercase">{label}</p>}
-        <h1 className="mt-3 max-w-3xl text-4xl font-extrabold tracking-tight text-navy-900 sm:text-5xl">{title}</h1>
+        {/* <h1 className="mt-3 max-w-3xl text-4xl font-extrabold tracking-tight text-navy-900 sm:text-5xl">{title}</h1> */}
+        <AnimatedHeading title={title} />
         {text && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">{text}</p>}
       </div>
     </section>

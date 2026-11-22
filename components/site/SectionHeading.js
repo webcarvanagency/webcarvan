@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import AnimatedHeading from "./AnimatedHeading";
 
 export default function SectionHeading({ label, title, text, align = "left", action, as: Tag = "h2" }) {
   const centered = align === "center";
@@ -8,7 +9,8 @@ export default function SectionHeading({ label, title, text, align = "left", act
     <div className={`flex flex-col gap-6 md:flex-row md:items-end ${centered ? "md:justify-center" : "md:justify-between"}`}>
       <div className={centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
         {label && <p className="text-xs font-bold tracking-[0.16em] text-brand-600 uppercase">{label}</p>}
-        <Tag className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{title}</Tag>
+        {/* <Tag className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{title}</Tag> */}
+        <AnimatedHeading title={title} />
         {text && <p className="mt-4 text-base leading-relaxed text-slate-600">{text}</p>}
       </div>
       {action && (

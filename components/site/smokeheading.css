@@ -1,0 +1,29 @@
+.smoke-word {
+  display: inline-block;
+}
+
+.smoke-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1.6);
+  transition:
+    opacity 1.4s ease var(--d),
+    filter 1.6s ease var(--d),
+    transform 1.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d);
+}
+
+.smoke-heading[data-visible="true"] .smoke-char {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smoke-char {
+    transition: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
